@@ -103,6 +103,11 @@ AjDraw = function() {
 				elements[n].draw(image);
 		}
 		
+		function rotate(degrees) {
+			for (var n in elements)
+				elements[n].rotate(degrees);
+		}
+		
 		function translate(move) {
 			for (var n in elements)
 				elements[n].translate(move);
@@ -127,6 +132,7 @@ AjDraw = function() {
 		this.draw = draw;
 		this.translate = translate;
 		this.clone = clone;
+		this.rotate = rotate;
 		
 		this.elements = function() { return elements; }
 	}
