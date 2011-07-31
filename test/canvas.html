@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<title>Using Canvas</title>
+	<script type="text/javascript" src="../src/ajdraw.js"></script>
+</head>
+<body>
+	<h1>Using Canvas</h1>
+	<canvas id="canvas" width="800" height="400"></canvas>
+	
+<script type="text/javascript">
+    window.onload = function () {
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext("2d");
+		
+		ctx.lineWidth = 0.2;
+		
+//		ctx.beginPath();
+		ctx.moveTo(100, 200);
+        ctx.lineTo(50, 300);
+        ctx.lineTo(150, 300);
+        ctx.lineTo(100, 200);		
+		ctx.stroke();
+
+		ctx.moveTo(110, 200);
+        ctx.lineTo(60, 300);
+        ctx.lineTo(160, 300);
+        ctx.lineTo(110, 200);
+		ctx.stroke();
+		
+		var image = new AjDraw.Image(ctx);
+			
+		var ln = line(p(10, 20), p(30, 40));
+		
+		ln.draw(image);
+		
+		var d = new AjDraw.Composite();
+		
+		ln = line(p(0, 0), p(100, 0));
+		
+		for (var k = 0; k <= 180; k += 10)
+			d.add(ln.clone().rotate(k));
+			
+		d.translate(p(100, 100));
+			
+		d.draw(image);
+	};
+	
+	function p(x, y) {
+		return new AjDraw.Point(x, y);
+	}
+	
+	function line(from, to ) {
+		return new AjDraw.Line(from, to);
+	}
+</script>
+</body>
+</html>

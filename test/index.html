@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<title>AjDraw Test Suite</title>
+	<link rel="stylesheet" href="qunit.css" type="text/css" media="screen">
+	<script type="text/javascript" src="../src/ajdraw.js"></script>
+	<script type="text/javascript" src="jquery-1.6.2.min.js"></script>
+	<script type="text/javascript" src="qunit.js"></script>
+	<script type="text/javascript" src="qmock.js"></script>
+      <script type="text/javascript">
+			
+			// Set QUnit.equiv as comparison routine
+			// You would normally do this inside of the unit-tests.js file
+			// But in this instance it is common so as to test compatibility with many testrunners
+			QMock.config.compare = QUnit.equiv;
+			
+			// Set to 'fail fast' to test error creation
+			QMock.config.failslow = false;
+			
+		  </script>
+</head>
+<body>
+	<h1 id="qunit-header">AjDraw Test Suite</h1>
+	<h2 id="qunit-banner"></h2>
+	<div id="qunit-testrunner-toolbar"></div>
+	<h2 id="qunit-userAgent"></h2>
+	<ol id="qunit-tests"></ol>
+	<div id="qunit-fixture">test markup</div>
+	
+<script type="text/javascript">
+	$(function() {
+		test("Create Point", function() {
+			var p = new AjDraw.Point(10, 20);
+			equal(p.x, 10);
+			equal(p.y, 20);
+		});
+
+		test("Translate Point", function() {
+			var p = new AjDraw.Point(10, 20);
+			var m = new AjDraw.Point(20, 30);
+			var result = p.translate(m);
+			
+			notEqual(result, null);
+			equal(result.x, 30);
+			equal(result.y, 50);
+		});
+
+		test("Resize Point", function() {
+			var p = new AjDraw.Point(10, 20);
+			var result = p.resize(2);
+			
+			notEqual(result, null);
+			equal(result.x, 20);
+			equal(result.y, 40);
+			
+			result = p.horizontalResize(2);
+			
+			notEqual(result, null);
+			equal(result.x, 20);
+			equal(result.y, 20);
+			
+			result = p.verticalResize(2);
+			
+			notEqual(result, null);
+			equal(result.x, 10);
+			equal(result.y, 40);
+		});
+		
+		test("Rotate Point", function() {
+			var point = p(10,20);
+		
+			deepEqual(point.rotate(0), p(10,20));
+			deepEqual(point.rotate(90), p(-20,10));
+			deepEqual(point.rotate(180), p(-10,-20));
+			deepEqual(point.rotate(270), p(20,-10));
+			
+			var result = point.rotate(45).rotate(45);
+			ok(Math.abs(result.x - (-20)) < 0.0000001);
+			ok(Math.abs(result.y - 10) < 0.0000001);
+		});
+		
+		test("Create and Clone Line", function() {
+			var ln = line(p(10,20), p(30,40));
+			
+			deepEqual(ln.from, p(10,20));
+			deepEqual(ln.to, p(30,40));
+			
+			deepEqual(ln.clone(), ln);
+		});
+		
+		test("Rotate Line", function() {
+			var ln = line(p(10,20), p(30,40)).rotate(45);
+			
+			deepEqual(ln.from, p(10,20).rotate(45));
+			deepEqual(ln.to, p(30,40).rotate(45));
+		});
+		
+		test("Translate Line", function() {
+			var ln = line(p(10,20), p(30,40)).translate(p(-1,-2));
+			
+			deepEqual(ln.from, p(10,20).translate(p(-1,-2)));
+			deepEqual(ln.to, p(30,40).translate(p(-1,-2)));
+		});
+		
+		test("Draw Line", function() {
+			var image = Mock().method("drawLine", 1)
+				.withArguments(10, 20, 30, 40)
+				.end();
+			
+			var ln = line(p(10,20), p(30,40));
+			
+			ln.draw(image);
+			ok(image.verify());
+		});
+		
+		test("Image Draw Line", function() {
+			var ctx = Mock().method("moveTo", 1)
+				.withArguments(10, 20)
+				.end()
+				.method("lineTo", 1)
+				.withArguments(30, 40)
+				.end()
+				.method("stroke", 1)
+				.end()
+				
+			var image = new AjDraw.Image(ctx);
+			
+			var ln = line(p(10,20), p(30,40));
+			
+			ln.draw(image);
+			ok(ctx.verify());
+		});
+	});
+	
+	function p(x, y) {
+		return new AjDraw.Point(x, y);
+	}
+	
+	function line(from, to) {
+		return new AjDraw.Line(from, to);
+	}
+</script>
+</body>
+</html>
