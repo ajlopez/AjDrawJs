@@ -39,11 +39,21 @@
 		
 		ln = line(p(0, 0), p(100, 0));
 		
-		for (var k = 0; k <= 180; k += 10)
-			d.add(ln.clone().rotate(k));
+		var ln2;
+		
+		for (var k = 0; k <= 180; k += 10) {
+			ln2 = ln.clone();
+			ln2.rotate(k);
+			d.add(ln2);
+		}
 			
 		d.translate(p(100, 100));
 			
+		d.draw(image);
+		
+		d = d.clone();
+		d.translate(p(100, 100));
+		
 		d.draw(image);
 	};
 	

@@ -90,14 +90,17 @@
 		});
 		
 		test("Rotate Line", function() {
-			var ln = line(p(10,20), p(30,40)).rotate(45);
+			var ln = line(p(10,20), p(30,40));
+			
+			ln.rotate(45);
 			
 			deepEqual(ln.from, p(10,20).rotate(45));
 			deepEqual(ln.to, p(30,40).rotate(45));
 		});
 		
 		test("Translate Line", function() {
-			var ln = line(p(10,20), p(30,40)).translate(p(-1,-2));
+			var ln = line(p(10,20), p(30,40));
+			ln.translate(p(-1,-2));
 			
 			deepEqual(ln.from, p(10,20).translate(p(-1,-2)));
 			deepEqual(ln.to, p(30,40).translate(p(-1,-2)));
@@ -130,6 +133,20 @@
 			
 			ln.draw(image);
 			ok(ctx.verify());
+		});
+		
+		test("Composite with Lines", function() {
+			var comp = new AjDraw.Composite();
+			
+			comp.line(p(10,10), p(20, 20));
+			comp.line(p(20,20), p(30, 30));
+
+			equal(comp.elements().length, 2);
+			
+			var comp2 = comp.clone();
+			
+			notEqual(comp, comp2);
+			deepEqual(comp, comp2);
 		});
 	});
 	
