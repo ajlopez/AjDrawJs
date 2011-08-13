@@ -131,8 +131,6 @@
 				.method("lineTo", 1)
 				.withArguments(30, 40)
 				.end()
-				.method("stroke", 1)
-				.end()
 				
 			var image = new AjDraw.Image(ctx);
 			
@@ -140,6 +138,28 @@
 			
 			ln.draw(image);
 			ok(ctx.verify());
+		});
+		
+		test("Image Draw Line with Color", function() {
+			var ctx = Mock().method("moveTo", 1)
+				.withArguments(10, 20)
+				.end()
+				.method("lineTo", 1)
+				.withArguments(30, 40)
+				.end()
+				.method("save", 1)
+				.end()
+				.method("restore", 1)
+				.end()
+				.property("strokeStyle", null)
+				
+			var image = new AjDraw.Image(ctx);
+			
+			var ln = line(p(10,20), p(30,40), { color: "red" });
+			
+			ln.draw(image);
+			ok(ctx.verify());
+			equal(ctx.strokeStyle, "red");
 		});
 		
 		test("Composite with Lines", function() {
@@ -164,8 +184,8 @@
 		return new AjDraw.Point(x, y);
 	}
 	
-	function line(from, to) {
-		return new AjDraw.Line(from, to);
+	function line(from, to, style) {
+		return new AjDraw.Line(from, to, style);
 	}
 </script>
 </body>

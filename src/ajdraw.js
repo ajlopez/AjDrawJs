@@ -48,52 +48,58 @@ AjDraw = function() {
         return new Point(newx, newy);
 	}
 	
-	function Line(from, to) {
+	function Line(from, to, style) {
 		this.from = from;
 		this.to = to;
+		this.style = style;
 	}
 	
 	Line.prototype.translate = function(move) {
 		return new Line(
 			this.from.translate(move),
-			this.to.translate(move)
+			this.to.translate(move),
+			this.style
 		);
 	}
 	
 	Line.prototype.resize = function(ratio) {
 		return new Line(
 			this.from.resize(ratio),
-			this.to.resize(ratio)
+			this.to.resize(ratio),
+			this.style
 		);
 	}
 	
 	Line.prototype.horizontalResize = function(ratio) {
 		return new Line(
 			this.from.horizontalResize(ratio),			
-			this.to = this.to.horizontalResize(ratio)
+			this.to.horizontalResize(ratio),
+			this.style
 		);
 	}
 	
 	Line.prototype.verticalResize = function(ratio) {
 		return new Line(
 			this.from.verticalResize(ratio),
-			this.to.verticalResize(ratio)
+			this.to.verticalResize(ratio),
+			this.style
 		);
 	}
 	
 	Line.prototype.rotate = function(degrees) {
 		return new Line(
 			this.from.rotate(degrees),
-			this.to.rotate(degrees)
+			this.to.rotate(degrees),
+			this.style
 		);
 	}
 	
 	Line.prototype.draw = function(image) {
-		image.drawLine(this.from.x, this.from.y, this.to.x, this.to.y);
+		image.drawLine(this.from.x, this.from.y, this.to.x, this.to.y, this.style);
 	}
 	
 	Line.prototype.clone = function() {
-		return new Line(this.from, this.to);
+		return new Line(this.from, this.to, this.style);
 	}
 	
 	function Composite(elements) {
@@ -157,8 +163,14 @@ AjDraw = function() {
 		var lastx = -1;
 		var lasty = -1;
 		
-		function drawLine(x1, y1, x2, y2)
+		function drawLine(x1, y1, x2, y2, style)
 		{
+			if (style != null) {
+				ctx.save();
+				if (style.color != null)
+					ctx.strokeStyle = style.color;
+			}
+				
 			if (x1 != lastx || y1 != lasty)
 				ctx.moveTo(x1, y1);
 				
@@ -166,6 +178,9 @@ AjDraw = function() {
 			
 			lastx = x2;
 			lasty = y2;
+			
+			if (style != null)
+				ctx.restore();
 		}
 		
 		this.drawLine = drawLine;

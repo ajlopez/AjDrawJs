@@ -18,15 +18,20 @@
 		
 //		ctx.beginPath();
 		ctx.save();
+		
 		ctx.fillStyle = "orange";
 		ctx.moveTo(100, 200);
         ctx.lineTo(50, 300);
+		
+		ctx.save();
+		ctx.strokeStyle = 'green';
+		ctx.strokeRect(0,0,75,75);		
+		ctx.restore();
+
         ctx.lineTo(150, 300);
         ctx.lineTo(100, 200);		
+
 		ctx.fill();
-		
-ctx.strokeStyle = '#FD0';
-ctx.strokeRect(0,0,75,75);		
 
 		ctx.restore();
 
