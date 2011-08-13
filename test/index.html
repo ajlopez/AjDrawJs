@@ -140,7 +140,7 @@
 			ok(ctx.verify());
 		});
 		
-		test("Image Draw Line with Color", function() {
+		test("Image Draws Line with Color", function() {
 			var ctx = Mock().method("moveTo", 1)
 				.withArguments(10, 20)
 				.end()
@@ -160,6 +160,31 @@
 			ln.draw(image);
 			ok(ctx.verify());
 			equal(ctx.strokeStyle, "red");
+		});
+		
+		test("Image Draws Two Lines with Color", function() {
+			var ctx = Mock().method("moveTo", 1)
+				.withArguments(10, 20)
+				.end()
+				.method("lineTo", 2)
+				.withArguments(30, 40)
+				.withArguments(50, 60)
+				.end()
+				.method("save", 2)
+				.end()
+				.method("restore", 2)
+				.end()
+				.property("strokeStyle", null)
+				
+			var image = new AjDraw.Image(ctx);
+			
+			var ln = line(p(10,20), p(30,40), { color: "red" });
+			var ln2 = line(p(30,40), p(50,60), { color: "green" });
+			
+			ln.draw(image);
+			ln2.draw(image);
+			ok(ctx.verify());
+			equal(ctx.strokeStyle, "green");
 		});
 		
 		test("Composite with Lines", function() {
