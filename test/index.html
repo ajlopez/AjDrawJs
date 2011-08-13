@@ -151,6 +151,10 @@
 				.end()
 				.method("restore", 1)
 				.end()
+				.method("beginPath", 1)
+				.end()
+				.method("stroke", 1)
+				.end()
 				.property("strokeStyle", null)
 				
 			var image = new AjDraw.Image(ctx);
@@ -173,6 +177,10 @@
 				.method("save", 2)
 				.end()
 				.method("restore", 2)
+				.end()
+				.method("beginPath", 2)
+				.end()
+				.method("stroke", 2)
 				.end()
 				.property("strokeStyle", null)
 				
@@ -203,6 +211,34 @@
 			
 			equal(comp.translate(p(100,100)).elements.length, 2);
 		});
+
+		test("Image Draws Triangle with Color", function() {
+			var ctx = Mock().method("moveTo", 1)
+				.withArguments(10, 20)
+				.end()
+				.method("lineTo", 3)
+				.withArguments(30, 40)
+				.withArguments(100, 80)
+				.withArguments(10, 20)
+				.end()
+				.method("save", 1)
+				.end()
+				.method("restore", 1)
+				.end()
+				.method("beginPath", 1)
+				.end()
+				.method("stroke", 1)
+				.end()
+				.property("strokeStyle", null)
+				
+			var image = new AjDraw.Image(ctx);
+			
+			var tr = new AjDraw.Triangle(p(10,20), p(30,40), p(100, 80), { color: "red" });
+			
+			tr.draw(image);
+			ok(ctx.verify());
+			equal(ctx.strokeStyle, "red");
+		});		
 	});
 	
 	function p(x, y) {

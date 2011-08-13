@@ -102,8 +102,9 @@ AjDraw = function() {
 		return new Line(this.from, this.to, this.style);
 	}
 	
-	function Composite(elements) {
+	function Composite(elements, style) {
 		this.elements = elements;
+		this.style = style;
 		
 		if (this.elements == undefined)
 			this.elements = [];
@@ -119,8 +120,12 @@ AjDraw = function() {
 	}
 		
 	Composite.prototype.draw = function (image) {
+		image.beginDraw(this.style);
+		
 		for (var n in this.elements)
 			this.elements[n].draw(image);
+			
+		image.endDraw(this.style);
 	}
 		
 	Composite.prototype.rotate = function (degrees) {
@@ -129,7 +134,7 @@ AjDraw = function() {
 		for (var n in this.elements)
 			newelements.push(this.elements[n].rotate(degrees));
 				
-		return new Composite(newelements);
+		return new Composite(newelements, this.style);
 	}
 		
 	Composite.prototype.translate = function (move) {
@@ -138,7 +143,7 @@ AjDraw = function() {
 		for (var n in this.elements)
 			newelements.push(this.elements[n].translate(move));
 			
-		return new Composite(newelements);
+		return new Composite(newelements, this.style);
 	}
 		
 	Composite.prototype.translateHorizontal = function (move) {
@@ -147,7 +152,7 @@ AjDraw = function() {
 		for (var n in this.elements)
 			newelements.push(this.elements[n].translate(move));
 			
-		return new Composite(newelements);
+		return new Composite(newelements, this.style);
 	}
 		
 	Composite.prototype.clone = function () {
@@ -156,21 +161,30 @@ AjDraw = function() {
 		for (var n in this.elements)
 			newelements.push(this.elements[n].clone());
 				
-		return new Composite(newelements);
+		return new Composite(newelements, this.style);
 	}
+	
+	function Triangle(point1, point2, point3, style) {
+		Composite.prototype.constructor.call(
+			this, 
+			[new Line(point1, point2),
+			new Line(point2, point3),
+			new Line(point3, point1)],
+			style
+		);
+	}
+	
+	Triangle.prototype = new Composite();
+	Triangle.prototype.constructor = Triangle;
 	
 	function Image(ctx) {
 		var lastx = -1;
 		var lasty = -1;
 		
 		function drawLine(x1, y1, x2, y2, style)
-		{
-			if (style != null) {
-				ctx.save();
-				if (style.color != null)
-					ctx.strokeStyle = style.color;
-			}
-				
+		{				
+			beginDraw(style);
+			
 			if (x1 != lastx || y1 != lasty)
 				ctx.moveTo(x1, y1);
 				
@@ -179,17 +193,43 @@ AjDraw = function() {
 			lastx = x2;
 			lasty = y2;
 			
-			if (style != null)
+			endDraw(style);
+		}
+		
+		function beginDraw(style) 
+		{
+			if (style != null) {
+				ctx.save();
+				ctx.beginPath();
+			}
+		}
+		
+		function endDraw(style) 
+		{
+			if (style != null) {
+				if (style.color != null)
+					if (style.fill)
+						ctx.fillStyle = style.color;
+					else
+						ctx.strokeStyle = style.color;
+				if (style.fill)
+					ctx.fill();
+				else
+					ctx.stroke();
 				ctx.restore();
+			}
 		}
 		
 		this.drawLine = drawLine;
+		this.beginDraw = beginDraw;
+		this.endDraw = endDraw;
 	}
 	
 	return {
 		Point: Point,
 		Line: Line,
 		Image: Image,
-		Composite: Composite
+		Composite: Composite,
+		Triangle: Triangle
 	}
 }();
