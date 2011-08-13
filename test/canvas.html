@@ -14,14 +14,21 @@
         var canvas = document.getElementById('canvas');
         var ctx = canvas.getContext("2d");
 		
-		ctx.lineWidth = 0.2;
+		ctx.lineWidth = 0.5;
 		
 //		ctx.beginPath();
+		ctx.save();
+		ctx.fillStyle = "orange";
 		ctx.moveTo(100, 200);
         ctx.lineTo(50, 300);
         ctx.lineTo(150, 300);
         ctx.lineTo(100, 200);		
-		ctx.stroke();
+		ctx.fill();
+		
+ctx.strokeStyle = '#FD0';
+ctx.strokeRect(0,0,75,75);		
+
+		ctx.restore();
 
 		ctx.moveTo(110, 200);
         ctx.lineTo(60, 300);
@@ -42,23 +49,21 @@
 		var ln2;
 		
 		for (var k = 0; k <= 180; k += 10) {
-			ln2 = ln.clone();
-			ln2.rotate(k);
-			d.add(ln2);
+			d.add(ln.rotate(k));
 		}
+
+		ctx.beginPath();		
+
+		d.draw(image);			
+		ctx.save();
+		ctx.strokeStyke = "orange";
+		d.translate(p(200, 200)).draw(image);
+		ctx.restore();
+		d.translate(p(300, 300)).draw(image);		
+		d.rotate(90).translate(p(100, 100)).draw(image);
 			
-		d.translate(p(100, 100));
-			
-		d.draw(image);
-		
-		d = d.clone();
-		d.translate(p(100, 100));
-		
-		d.draw(image);
-		
-		//d.rotate(90);
-		//d.translate(p(50, 50));
-		//d.draw(image);
+		ctx.closePath();
+		ctx.stroke();
 	};
 	
 	function p(x, y) {

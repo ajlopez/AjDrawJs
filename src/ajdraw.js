@@ -54,28 +54,38 @@ AjDraw = function() {
 	}
 	
 	Line.prototype.translate = function(move) {
-		this.from = this.from.translate(move);
-		this.to = this.to.translate(move);
+		return new Line(
+			this.from.translate(move),
+			this.to.translate(move)
+		);
 	}
 	
 	Line.prototype.resize = function(ratio) {
-		this.from = this.from.resize(ratio);
-		this.to = this.to.resize(ratio);
+		return new Line(
+			this.from.resize(ratio),
+			this.to.resize(ratio)
+		);
 	}
 	
 	Line.prototype.horizontalResize = function(ratio) {
-		this.from = this.from.horizontalResize(ratio);
-		this.to = this.to.horizontalResize(ratio);
+		return new Line(
+			this.from.horizontalResize(ratio),			
+			this.to = this.to.horizontalResize(ratio)
+		);
 	}
 	
 	Line.prototype.verticalResize = function(ratio) {
-		this.from = this.from.verticalResize(ratio);
-		this.to = this.to.verticalResize(ratio);
+		return new Line(
+			this.from.verticalResize(ratio),
+			this.to.verticalResize(ratio)
+		);
 	}
 	
 	Line.prototype.rotate = function(degrees) {
-		this.from = this.from.rotate(degrees);
-		this.to = this.to.rotate(degrees);
+		return new Line(
+			this.from.rotate(degrees),
+			this.to.rotate(degrees)
+		);
 	}
 	
 	Line.prototype.draw = function(image) {
@@ -86,55 +96,61 @@ AjDraw = function() {
 		return new Line(this.from, this.to);
 	}
 	
-	function Composite() {
-		var elements = [];
+	function Composite(elements) {
+		this.elements = elements;
 		
-		function line(from, to) {
-			add(new Line(from, to));
-		}
+		if (this.elements == undefined)
+			this.elements = [];
+	}
 		
-		function add(element)
-		{
-			elements.push(element);
-		}
+	Composite.prototype.line = function (from, to) {
+		this.add(new Line(from, to));
+		return this;
+	}
 		
-		function draw(image) {
-			for (var n in elements)
-				elements[n].draw(image);
-		}
+	Composite.prototype.add = function (element) {
+		this.elements.push(element);
+	}
 		
-		function rotate(degrees) {
-			for (var n in elements)
-				elements[n].rotate(degrees);
-		}
+	Composite.prototype.draw = function (image) {
+		for (var n in this.elements)
+			this.elements[n].draw(image);
+	}
 		
-		function translate(move) {
-			for (var n in elements)
-				elements[n].translate(move);
-		}
-		
-		function translateHorizontal(move) {
-			for (var n in elements)
-				elements[n].translate(move);
-		}
-		
-		function clone() {
-			var newobj = new Composite();
+	Composite.prototype.rotate = function (degrees) {
+		var newelements = [];
 			
-			for (var n in elements)
-				newobj.add(elements[n].clone());
+		for (var n in this.elements)
+			newelements.push(this.elements[n].rotate(degrees));
 				
-			return newobj;
-		}
+		return new Composite(newelements);
+	}
 		
-		this.line = line;
-		this.add = add;
-		this.draw = draw;
-		this.translate = translate;
-		this.clone = clone;
-		this.rotate = rotate;
+	Composite.prototype.translate = function (move) {
+		var newelements = [];
+			
+		for (var n in this.elements)
+			newelements.push(this.elements[n].translate(move));
+			
+		return new Composite(newelements);
+	}
 		
-		this.elements = function() { return elements; }
+	Composite.prototype.translateHorizontal = function (move) {
+		var newelements = [];
+			
+		for (var n in this.elements)
+			newelements.push(this.elements[n].translate(move));
+			
+		return new Composite(newelements);
+	}
+		
+	Composite.prototype.clone = function () {
+		var newelements = [];
+			
+		for (var n in this.elements)
+			newelements.push(this.elements[n].clone());
+				
+		return new Composite(newelements);
 	}
 	
 	function Image(ctx) {
@@ -150,8 +166,6 @@ AjDraw = function() {
 			
 			lastx = x2;
 			lasty = y2;
-			
-			ctx.stroke();
 		}
 		
 		this.drawLine = drawLine;

@@ -42,6 +42,8 @@
 			var result = p.translate(m);
 			
 			notEqual(result, null);
+			notEqual(result, p);
+			notEqual(result, m);
 			equal(result.x, 30);
 			equal(result.y, 50);
 		});
@@ -51,18 +53,21 @@
 			var result = p.resize(2);
 			
 			notEqual(result, null);
+			notEqual(result, p);
 			equal(result.x, 20);
 			equal(result.y, 40);
 			
 			result = p.horizontalResize(2);
 			
 			notEqual(result, null);
+			notEqual(result, p);
 			equal(result.x, 20);
 			equal(result.y, 20);
 			
 			result = p.verticalResize(2);
 			
 			notEqual(result, null);
+			notEqual(result, p);
 			equal(result.x, 10);
 			equal(result.y, 40);
 		});
@@ -92,18 +97,20 @@
 		test("Rotate Line", function() {
 			var ln = line(p(10,20), p(30,40));
 			
-			ln.rotate(45);
+			var ln2 = ln.rotate(45);
 			
-			deepEqual(ln.from, p(10,20).rotate(45));
-			deepEqual(ln.to, p(30,40).rotate(45));
+			notEqual(ln2, ln);
+			deepEqual(ln2.from, p(10,20).rotate(45));
+			deepEqual(ln2.to, p(30,40).rotate(45));
 		});
 		
 		test("Translate Line", function() {
 			var ln = line(p(10,20), p(30,40));
-			ln.translate(p(-1,-2));
+			var ln2 = ln.translate(p(-1,-2));
 			
-			deepEqual(ln.from, p(10,20).translate(p(-1,-2)));
-			deepEqual(ln.to, p(30,40).translate(p(-1,-2)));
+			notEqual(ln2, ln);
+			deepEqual(ln2.from, p(10,20).translate(p(-1,-2)));
+			deepEqual(ln2.to, p(30,40).translate(p(-1,-2)));
 		});
 		
 		test("Draw Line", function() {
@@ -138,15 +145,18 @@
 		test("Composite with Lines", function() {
 			var comp = new AjDraw.Composite();
 			
-			comp.line(p(10,10), p(20, 20));
-			comp.line(p(20,20), p(30, 30));
+			strictEqual(comp.line(p(10,10), p(20, 20)), comp);
+			strictEqual(comp.line(p(20,20), p(30, 30)), comp);
 
-			equal(comp.elements().length, 2);
+			equal(comp.elements.length, 2);
 			
 			var comp2 = comp.clone();
 			
 			notEqual(comp, comp2);
+			notStrictEqual(comp, comp2);
 			deepEqual(comp, comp2);
+			
+			equal(comp.translate(p(100,100)).elements.length, 2);
 		});
 	});
 	
