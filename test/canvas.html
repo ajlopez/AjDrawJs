@@ -127,6 +127,15 @@
 			segment, 20, { color: "blue" });
 		rep = rep.translate(p(250, 150));
 		rep.draw(image);
+
+		var wave = new AjDraw.XFunction(
+			function (x) { return Math.sin(x) / Math.exp(x/10*x/10); },
+			-Math.PI*10, Math.PI*10, Math.PI/360, { color: "red" });
+		wave = wave.verticalResize(20);
+		wave = wave.horizontalResize(3);
+		wave = wave.translate(p(250, 250));
+		
+		wave.draw(image);
 	};
 	
 	function p(x, y) {
