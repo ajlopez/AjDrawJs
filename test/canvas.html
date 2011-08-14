@@ -90,6 +90,43 @@
 		s = s.translate(p(100, 100));
 		
 		s.draw(image);
+
+		var c = new AjDraw.Cosine(0, Math.PI*20, Math.PI/360, { color: "red", lineWidth: 3 });
+		c = c.verticalResize(10);
+		c = c.horizontalResize(3);
+		c = c.translate(p(100, 100));
+		
+		c.draw(image);
+
+		var f = new AjDraw.YFunction(Math.sin, 0, Math.PI*20, Math.PI/360, { color: "blue" });
+		f = f.verticalResize(3);
+		f = f.horizontalResize(10);
+		f = f.translate(p(100, 200));
+		
+		f.draw(image);
+		
+		var cr = new AjDraw.PointFunction(
+			function (r) { return new AjDraw.Point(Math.sin(r*2), Math.cos(r*3)) },
+			0, Math.PI*2, Math.PI/360, { color: "orange" });
+		cr = cr.resize(20);
+		cr = cr.translate(p(200, 200));
+		
+		cr.draw(image);
+		
+		var spiral = new AjDraw.PointFunction(
+			function (r) { return new AjDraw.Point(Math.sin(r)*r, Math.cos(r)*r) },
+			0, Math.PI*2, Math.PI/360, { color: "red" });
+		spiral = spiral.resize(20);
+		spiral = spiral.translate(p(200, 200));
+		
+		spiral.draw(image);
+		
+		var segment = line(p(100, 0), p(200,0));
+		var rep = new AjDraw.Repeat(
+			function (element) { return element.rotate(10); },
+			segment, 20, { color: "blue" });
+		rep = rep.translate(p(250, 150));
+		rep.draw(image);
 	};
 	
 	function p(x, y) {

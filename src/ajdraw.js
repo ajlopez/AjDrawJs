@@ -40,7 +40,7 @@ AjDraw = function() {
 			return new Point(this.y, -this.x);
 			
         var newx = this.x * Math.cos(2 * Math.PI / 360 * degrees)
-                        - this.y * Math.cos(2 * Math.PI / 360 * degrees);
+                        - this.y * Math.sin(2 * Math.PI / 360 * degrees);
 
         var newy = this.x * Math.sin(2 * Math.PI / 360 * degrees)
                         + this.y * Math.cos(2 * Math.PI / 360 * degrees);
@@ -195,12 +195,12 @@ AjDraw = function() {
 	Triangle.prototype = new Composite();
 	Triangle.prototype.constructor = Triangle;
 	
-	function Sine(from, to, step, style) {
+	function XFunction(fn, from, to, step, style) {
 		var lines = [];
 		var points = [];
 		
 		for (var x = from; x <= to; x += step)
-			points.push(new Point(x, Math.sin(x)));
+			points.push(new Point(x, fn(x)));
 			
 		for (var n = 0; n < points.length-2; n++)
 			lines.push(new Line(points[n], points[n+1]));
@@ -212,8 +212,95 @@ AjDraw = function() {
 		);
 	}
 	
-	Sine.prototype = new Composite();
+	XFunction.prototype = new Composite();
+	XFunction.prototype.constructor = XFunction;
+	
+	function YFunction(fn, from, to, step, style) {
+		var lines = [];
+		var points = [];
+		
+		for (var y = from; y <= to; y += step)
+			points.push(new Point(fn(y), y));
+			
+		for (var n = 0; n < points.length-2; n++)
+			lines.push(new Line(points[n], points[n+1]));
+			
+		Composite.prototype.constructor.call(
+			this, 
+			lines,
+			style
+		);
+	}
+	
+	YFunction.prototype = new Composite();
+	YFunction.prototype.constructor = YFunction;
+	
+	function PointFunction(fn, from, to, step, style) {
+		var lines = [];
+		var points = [];
+		
+		for (var r = from; r <= to; r += step)
+			points.push(fn(r));
+			
+		for (var n = 0; n < points.length-2; n++)
+			lines.push(new Line(points[n], points[n+1]));
+			
+		Composite.prototype.constructor.call(
+			this, 
+			lines,
+			style
+		);
+	}
+	
+	PointFunction.prototype = new Composite();
+	PointFunction.prototype.constructor = PointFunction;
+	
+	function Repeat(fn, element, ntimes, style) {
+		var elements = [];
+		
+		for (var n = 0; n < ntimes; n++) 
+		{
+			elements.push(element);
+			element = fn(element);
+		}
+			
+		Composite.prototype.constructor.call(
+			this, 
+			elements,
+			style
+		);
+	}
+	
+	Repeat.prototype = new Composite();
+	Repeat.prototype.constructor = Repeat;
+	
+	function Sine(from, to, step, style) {
+		XFunction.prototype.constructor.call(
+			this, 
+			Math.sin,
+			from,
+			to,
+			step,
+			style
+		);
+	}
+	
+	Sine.prototype = new XFunction();
 	Sine.prototype.constructor = Sine;
+	
+	function Cosine(from, to, step, style) {
+		XFunction.prototype.constructor.call(
+			this, 
+			Math.cos,
+			from,
+			to,
+			step,
+			style
+		);
+	}
+	
+	Cosine.prototype = new XFunction();
+	Cosine.prototype.constructor = Cosine;
 	
 	function Image(ctx) {
 		var lastx = -1;
@@ -245,6 +332,9 @@ AjDraw = function() {
 		function endDraw(style) 
 		{
 			if (style != null) {
+				if (style.lineWidth != null)
+					ctx.lineWidth = style.lineWidth;
+					
 				if (style.fillColor != null)
 					ctx.fillStyle = style.fillColor;
 					
@@ -272,6 +362,11 @@ AjDraw = function() {
 		Image: Image,
 		Composite: Composite,
 		Triangle: Triangle,
-		Sine: Sine
+		XFunction: XFunction,
+		YFunction: YFunction,
+		PointFunction: PointFunction,
+		Repeat: Repeat,
+		Sine: Sine,
+		Cosine: Cosine
 	}
 }();
