@@ -15,6 +15,15 @@
         var ctx = canvas.getContext("2d");
 		
 		ctx.lineWidth = 2;
+
+		ctx.fillStyle = "orange";
+		ctx.moveTo(300, 200);
+        ctx.lineTo(250, 300);
+
+        ctx.lineTo(350, 300);
+        ctx.lineTo(300, 200);		
+		ctx.stroke();
+		ctx.fill();
 		
 		ctx.save();
 		
@@ -27,7 +36,7 @@
         ctx.lineTo(250, 300);
         ctx.lineTo(200, 200);		
 		ctx.stroke();
-		//ctx.fill();
+		ctx.fill();
 
 		ctx.restore();
 		
@@ -72,10 +81,15 @@
 		d.style.color = "orange";
 		d.rotate(90).translate(p(100, 100)).draw(image);
 
-		var t = new AjDraw.Triangle(p(300, 100), p(400, 200), p(400, 100), { color: "red", fill: true });
+		var t = new AjDraw.Triangle(p(300, 100), p(400, 200), p(400, 100), { fillColor: "red" });
 		t.draw(image);
-
-		ctx.stroke();
+		
+		var s = new AjDraw.Sine(0, Math.PI*20, Math.PI/360, { color: "green" });
+		s = s.verticalResize(10);
+		s = s.horizontalResize(3);
+		s = s.translate(p(100, 100));
+		
+		s.draw(image);
 	};
 	
 	function p(x, y) {

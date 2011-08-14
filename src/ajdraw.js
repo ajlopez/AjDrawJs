@@ -137,16 +137,34 @@ AjDraw = function() {
 		return new Composite(newelements, this.style);
 	}
 		
-	Composite.prototype.translate = function (move) {
+	Composite.prototype.resize = function (ratio) {
 		var newelements = [];
 			
 		for (var n in this.elements)
-			newelements.push(this.elements[n].translate(move));
-			
+			newelements.push(this.elements[n].resize(ratio));
+				
 		return new Composite(newelements, this.style);
 	}
 		
-	Composite.prototype.translateHorizontal = function (move) {
+	Composite.prototype.horizontalResize = function (ratio) {
+		var newelements = [];
+			
+		for (var n in this.elements)
+			newelements.push(this.elements[n].horizontalResize(ratio));
+				
+		return new Composite(newelements, this.style);
+	}
+		
+	Composite.prototype.verticalResize = function (ratio) {
+		var newelements = [];
+			
+		for (var n in this.elements)
+			newelements.push(this.elements[n].verticalResize(ratio));
+				
+		return new Composite(newelements, this.style);
+	}
+		
+	Composite.prototype.translate = function (move) {
 		var newelements = [];
 			
 		for (var n in this.elements)
@@ -176,6 +194,26 @@ AjDraw = function() {
 	
 	Triangle.prototype = new Composite();
 	Triangle.prototype.constructor = Triangle;
+	
+	function Sine(from, to, step, style) {
+		var lines = [];
+		var points = [];
+		
+		for (var x = from; x <= to; x += step)
+			points.push(new Point(x, Math.sin(x)));
+			
+		for (var n = 0; n < points.length-2; n++)
+			lines.push(new Line(points[n], points[n+1]));
+			
+		Composite.prototype.constructor.call(
+			this, 
+			lines,
+			style
+		);
+	}
+	
+	Sine.prototype = new Composite();
+	Sine.prototype.constructor = Sine;
 	
 	function Image(ctx) {
 		var lastx = -1;
@@ -207,15 +245,18 @@ AjDraw = function() {
 		function endDraw(style) 
 		{
 			if (style != null) {
+				if (style.fillColor != null)
+					ctx.fillStyle = style.fillColor;
+					
 				if (style.color != null)
-					if (style.fill)
-						ctx.fillStyle = style.color;
-					else
-						ctx.strokeStyle = style.color;
-				if (style.fill)
+					ctx.strokeStyle = style.color;
+					
+				if (style.fillColor != null)
 					ctx.fill();
-				else
+					
+				if (style.color != null)
 					ctx.stroke();
+				
 				ctx.restore();
 			}
 		}
@@ -230,6 +271,7 @@ AjDraw = function() {
 		Line: Line,
 		Image: Image,
 		Composite: Composite,
-		Triangle: Triangle
+		Triangle: Triangle,
+		Sine: Sine
 	}
 }();
