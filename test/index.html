@@ -239,6 +239,35 @@
 			ok(ctx.verify());
 			equal(ctx.strokeStyle, "red");
 		});		
+
+		test("Image Draws Rectangle with Color", function() {
+			var ctx = Mock().method("moveTo", 1)
+				.withArguments(10, 20)
+				.end()
+				.method("lineTo", 4)
+				.withArguments(30, 20)
+				.withArguments(30, 40)
+				.withArguments(10, 40)
+				.withArguments(10, 20)
+				.end()
+				.method("save", 1)
+				.end()
+				.method("restore", 1)
+				.end()
+				.method("beginPath", 1)
+				.end()
+				.method("stroke", 1)
+				.end()
+				.property("strokeStyle", null)
+				
+			var image = new AjDraw.Image(ctx);
+			
+			var tr = new AjDraw.Rectangle(p(10,20), p(30,40), { color: "red" });
+			
+			tr.draw(image);
+			ok(ctx.verify());
+			equal(ctx.strokeStyle, "red");
+		});		
 	});
 	
 	function p(x, y) {

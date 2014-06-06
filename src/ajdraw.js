@@ -195,6 +195,23 @@ AjDraw = function() {
 	Triangle.prototype = new Composite();
 	Triangle.prototype.constructor = Triangle;
 	
+	function Rectangle(point1, point2, style) {
+        var point3 = new Point(point2.x, point1.y);
+        var point4 = new Point(point1.x, point2.y);
+        
+		Composite.prototype.constructor.call(
+			this, 
+			[new Line(point1, point3),
+			new Line(point3, point2),
+			new Line(point2, point4),
+            new Line(point4, point1)],
+			style
+		);
+	}
+	
+	Rectangle.prototype = new Composite();
+	Rectangle.prototype.constructor = Rectangle;
+	
 	function XFunction(fn, from, to, step, style) {
 		var lines = [];
 		var points = [];
@@ -362,6 +379,7 @@ AjDraw = function() {
 		Image: Image,
 		Composite: Composite,
 		Triangle: Triangle,
+        Rectangle: Rectangle,
 		XFunction: XFunction,
 		YFunction: YFunction,
 		PointFunction: PointFunction,
