@@ -374,6 +374,8 @@ var ajdraw = function() {
 	}
 	
 	return {
+		point: function (x, y) { return new Point(x, y); },
+
 		Point: Point,
 		Line: Line,
 		Image: Image,
