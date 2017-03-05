@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="UTF-8" />
-	<title>AjDraw Test Suite</title>
+	<title>ajdraw Test Suite</title>
 	<link rel="stylesheet" href="qunit.css" type="text/css" media="screen">
 	<script type="text/javascript" src="../src/ajdraw.js"></script>
 	<script type="text/javascript" src="jquery-1.6.2.min.js"></script>
@@ -21,7 +21,7 @@
 		  </script>
 </head>
 <body>
-	<h1 id="qunit-header">AjDraw Test Suite</h1>
+	<h1 id="qunit-header">ajdraw Test Suite</h1>
 	<h2 id="qunit-banner"></h2>
 	<div id="qunit-testrunner-toolbar"></div>
 	<h2 id="qunit-userAgent"></h2>
@@ -31,14 +31,14 @@
 <script type="text/javascript">
 	$(function() {
 		test("Create Point", function() {
-			var p = new AjDraw.Point(10, 20);
+			var p = new ajdraw.Point(10, 20);
 			equal(p.x, 10);
 			equal(p.y, 20);
 		});
 
 		test("Translate Point", function() {
-			var p = new AjDraw.Point(10, 20);
-			var m = new AjDraw.Point(20, 30);
+			var p = new ajdraw.Point(10, 20);
+			var m = new ajdraw.Point(20, 30);
 			var result = p.translate(m);
 			
 			notEqual(result, null);
@@ -49,7 +49,7 @@
 		});
 
 		test("Resize Point", function() {
-			var p = new AjDraw.Point(10, 20);
+			var p = new ajdraw.Point(10, 20);
 			var result = p.resize(2);
 			
 			notEqual(result, null);
@@ -132,7 +132,7 @@
 				.withArguments(30, 40)
 				.end()
 				
-			var image = new AjDraw.Image(ctx);
+			var image = new ajdraw.Image(ctx);
 			
 			var ln = line(p(10,20), p(30,40));
 			
@@ -157,7 +157,7 @@
 				.end()
 				.property("strokeStyle", null)
 				
-			var image = new AjDraw.Image(ctx);
+			var image = new ajdraw.Image(ctx);
 			
 			var ln = line(p(10,20), p(30,40), { color: "red" });
 			
@@ -184,7 +184,7 @@
 				.end()
 				.property("strokeStyle", null)
 				
-			var image = new AjDraw.Image(ctx);
+			var image = new ajdraw.Image(ctx);
 			
 			var ln = line(p(10,20), p(30,40), { color: "red" });
 			var ln2 = line(p(30,40), p(50,60), { color: "green" });
@@ -196,7 +196,7 @@
 		});
 		
 		test("Composite with Lines", function() {
-			var comp = new AjDraw.Composite();
+			var comp = new ajdraw.Composite();
 			
 			strictEqual(comp.line(p(10,10), p(20, 20)), comp);
 			strictEqual(comp.line(p(20,20), p(30, 30)), comp);
@@ -231,9 +231,9 @@
 				.end()
 				.property("strokeStyle", null)
 				
-			var image = new AjDraw.Image(ctx);
+			var image = new ajdraw.Image(ctx);
 			
-			var tr = new AjDraw.Triangle(p(10,20), p(30,40), p(100, 80), { color: "red" });
+			var tr = new ajdraw.Triangle(p(10,20), p(30,40), p(100, 80), { color: "red" });
 			
 			tr.draw(image);
 			ok(ctx.verify());
@@ -260,9 +260,9 @@
 				.end()
 				.property("strokeStyle", null)
 				
-			var image = new AjDraw.Image(ctx);
+			var image = new ajdraw.Image(ctx);
 			
-			var tr = new AjDraw.Rectangle(p(10,20), p(30,40), { color: "red" });
+			var tr = new ajdraw.Rectangle(p(10,20), p(30,40), { color: "red" });
 			
 			tr.draw(image);
 			ok(ctx.verify());
@@ -271,11 +271,11 @@
 	});
 	
 	function p(x, y) {
-		return new AjDraw.Point(x, y);
+		return new ajdraw.Point(x, y);
 	}
 	
 	function line(from, to, style) {
-		return new AjDraw.Line(from, to, style);
+		return new ajdraw.Line(from, to, style);
 	}
 </script>
 </body>

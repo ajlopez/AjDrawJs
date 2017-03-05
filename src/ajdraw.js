@@ -1,5 +1,5 @@
 
-AjDraw = function() {
+var ajdraw = function() {
 	function Point(x, y) {
 		this.x = x;
 		this.y = y;
@@ -388,3 +388,10 @@ AjDraw = function() {
 		Cosine: Cosine
 	}
 }();
+
+if (typeof module !== 'undefined' && module && module.exports)
+    module.exports = ajdraw;
+else if (typeof windows !== 'undefined')
+	windows.ajdraw = ajdraw;
+
+
