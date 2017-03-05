@@ -59,13 +59,13 @@
 
 		//ctx.strokeStyle = "black";
 		
-		var image = new AjDraw.Image(ctx);
+		var image = new ajdraw.Image(ctx);
 			
 		var ln = line(p(100, 200), p(300, 400), { color: "red" });
 		
 		ln.draw(image);
 		
-		var d = new AjDraw.Composite([], { color: "yellow" });
+		var d = new ajdraw.Composite([], { color: "yellow" });
 		
 		ln = line(p(0, 0), p(100, 0));
 		
@@ -81,40 +81,40 @@
 		d.style.color = "orange";
 		d.rotate(90).translate(p(100, 100)).draw(image);
 
-		var t = new AjDraw.Triangle(p(300, 100), p(400, 200), p(400, 100), { fillColor: "red" });
+		var t = new ajdraw.Triangle(p(300, 100), p(400, 200), p(400, 100), { fillColor: "red" });
 		t.draw(image);
 		
-		var s = new AjDraw.Sine(0, Math.PI*20, Math.PI/360, { color: "green" });
+		var s = new ajdraw.Sine(0, Math.PI*20, Math.PI/360, { color: "green" });
 		s = s.verticalResize(10);
 		s = s.horizontalResize(3);
 		s = s.translate(p(100, 100));
 		
 		s.draw(image);
 
-		var c = new AjDraw.Cosine(0, Math.PI*20, Math.PI/360, { color: "red", lineWidth: 3 });
+		var c = new ajdraw.Cosine(0, Math.PI*20, Math.PI/360, { color: "red", lineWidth: 3 });
 		c = c.verticalResize(10);
 		c = c.horizontalResize(3);
 		c = c.translate(p(100, 100));
 		
 		c.draw(image);
 
-		var f = new AjDraw.YFunction(Math.sin, 0, Math.PI*20, Math.PI/360, { color: "blue" });
+		var f = new ajdraw.YFunction(Math.sin, 0, Math.PI*20, Math.PI/360, { color: "blue" });
 		f = f.verticalResize(3);
 		f = f.horizontalResize(10);
 		f = f.translate(p(100, 200));
 		
 		f.draw(image);
 		
-		var cr = new AjDraw.PointFunction(
-			function (r) { return new AjDraw.Point(Math.sin(r*2), Math.cos(r*3)) },
+		var cr = new ajdraw.PointFunction(
+			function (r) { return new ajdraw.Point(Math.sin(r*2), Math.cos(r*3)) },
 			0, Math.PI*2, Math.PI/360, { color: "orange" });
 		cr = cr.resize(20);
 		cr = cr.translate(p(200, 200));
 		
 		cr.draw(image);
 		
-		var spiral = new AjDraw.PointFunction(
-			function (r) { return new AjDraw.Point(Math.sin(r)*r, Math.cos(r)*r) },
+		var spiral = new ajdraw.PointFunction(
+			function (r) { return new ajdraw.Point(Math.sin(r)*r, Math.cos(r)*r) },
 			0, Math.PI*2, Math.PI/360, { color: "red" });
 		spiral = spiral.resize(20);
 		spiral = spiral.translate(p(200, 200));
@@ -122,13 +122,13 @@
 		spiral.draw(image);
 		
 		var segment = line(p(100, 0), p(200,0));
-		var rep = new AjDraw.Repeat(
+		var rep = new ajdraw.Repeat(
 			function (element) { return element.rotate(10); },
 			segment, 20, { color: "blue" });
 		rep = rep.translate(p(250, 150));
 		rep.draw(image);
 
-		var wave = new AjDraw.XFunction(
+		var wave = new ajdraw.XFunction(
 			function (x) { return Math.sin(x) / Math.exp(x/10*x/10); },
 			-Math.PI*10, Math.PI*10, Math.PI/360, { color: "red" });
 		wave = wave.verticalResize(20);
@@ -139,11 +139,11 @@
 	};
 	
 	function p(x, y) {
-		return new AjDraw.Point(x, y);
+		return new ajdraw.Point(x, y);
 	}
 	
 	function line(from, to, style ) {
-		return new AjDraw.Line(from, to, style);
+		return new ajdraw.Line(from, to, style);
 	}
 </script>
 </body>
