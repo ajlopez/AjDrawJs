@@ -1,8 +1,8 @@
 
 var ajdraw = function() {
 	function Point(x, y) {
-		this.x = x;
-		this.y = y;
+		this.x = function () { return x; };
+		this.y = function () { return y; };
 	}
 	
 	Point.prototype.translate = function(move) 
