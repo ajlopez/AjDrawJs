@@ -7,7 +7,7 @@ var ajdraw = function() {
 	
 	Point.prototype.translate = function(move) 
 	{
-		return new Point(this.x + move.x, this.y + move.y);
+		return new Point(this.x() + move.x(), this.y() + move.y());
 	}
 	
 	Point.prototype.resize = function(ratio)
