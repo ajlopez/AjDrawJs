@@ -24,3 +24,12 @@ exports['translate point'] = function (test) {
     test.equal(result.x(), 4);
     test.equal(result.y(), 46);
 };
+
+exports['resize point'] = function (test) {
+    var point = ajdraw.point(1, 21);
+
+	var result = point.resize(2);
+	
+    test.equal(result.x(), 2);
+    test.equal(result.y(), 42);
+};
