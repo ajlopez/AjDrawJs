@@ -17,7 +17,7 @@ var ajdraw = function() {
 	
 	Point.prototype.horizontalResize = function(ratio)
 	{
-		return new Point(this.x * ratio, this.y);
+		return new Point(this.x() * ratio, this.y());
 	}
 	
 	Point.prototype.verticalResize = function(ratio)

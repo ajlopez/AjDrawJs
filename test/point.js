@@ -33,3 +33,12 @@ exports['resize point'] = function (test) {
     test.equal(result.x(), 2);
     test.equal(result.y(), 42);
 };
+
+exports['horizontal resize point'] = function (test) {
+    var point = ajdraw.point(1, 42);
+
+	var result = point.horizontalResize(2);
+	
+    test.equal(result.x(), 2);
+    test.equal(result.y(), 42);
+};
