@@ -22,7 +22,7 @@ var ajdraw = function() {
 	
 	Point.prototype.verticalResize = function(ratio)
 	{
-		return new Point(this.x, this.y * ratio);
+		return new Point(this.x(), this.y() * ratio);
 	}
 	
 	Point.prototype.rotate = function(degrees)
