@@ -61,3 +61,13 @@ exports['rotate point 0 degrees'] = function (test) {
     test.equal(result.y(), 42);
 };
 
+
+exports['rotate point 0 degrees'] = function (test) {
+    var point = ajdraw.point(1, 42);
+
+	var result = point.rotate(90);
+	
+    test.equal(result.x(), -42);
+    test.equal(result.y(), 1);
+};
+
