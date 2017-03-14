@@ -34,7 +34,7 @@ var ajdraw = function() {
 			return new Point(-this.y(), this.x());
 			
 		if (degrees == 180)
-			return new Point(-this.x, -this.y);
+			return new Point(-this.x(), -this.y());
 			
 		if (degrees == 270)
 			return new Point(this.y, -this.x);
