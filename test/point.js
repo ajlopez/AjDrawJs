@@ -87,3 +87,18 @@ exports['rotate point 270 degrees'] = function (test) {
     test.equal(result.x(), 42);
     test.equal(result.y(), -1);
 };
+
+exports['rotate point 45 degrees'] = function (test) {
+    var point = ajdraw.point(1, 1);
+
+	var result = point.rotate(45);
+	
+	var cos = Math.cos(2 * Math.PI / 8);
+	var sin = Math.sin(2 * Math.PI / 8);
+	
+	var x = point.x() * cos - point.y() * sin;
+	var y = point.x() * sin - point.y() * cos;
+	
+    test.equal(result.x(), x);
+    test.equal(result.y(), y);
+};
