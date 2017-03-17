@@ -97,7 +97,7 @@ exports['rotate point 45 degrees'] = function (test) {
 	var sin = Math.sin(2 * Math.PI / 8);
 	
 	var x = point.x() * cos - point.y() * sin;
-	var y = point.x() * sin - point.y() * cos;
+	var y = point.x() * sin + point.y() * cos;
 	
     test.equal(result.x(), x);
     test.equal(result.y(), y);
