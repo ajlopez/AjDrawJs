@@ -38,12 +38,16 @@ var ajdraw = function() {
 			
 		if (degrees == 270)
 			return new Point(this.y(), -this.x());
-			
-        var newx = this.x() * Math.cos(2 * Math.PI / 360 * degrees)
-                        - this.y() * Math.sin(2 * Math.PI / 360 * degrees);
 
-        var newy = this.x() * Math.sin(2 * Math.PI / 360 * degrees)
-                        + this.y() * Math.cos(2 * Math.PI / 360 * degrees);
+		var radians = 2 * Math.PI / 360 * degrees;
+		var cos = Math.cos(radians);
+		var sin = Math.sin(radians);
+		
+        var newx = this.x() * cos
+                        - this.y() * sin;
+
+        var newy = this.x() * sin
+                        + this.y() * cos;
 
         return new Point(newx, newy);
 	}
