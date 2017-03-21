@@ -99,7 +99,7 @@ var ajdraw = function() {
 	}
 	
 	Line.prototype.draw = function(image) {
-		image.drawLine(this.from.x, this.from.y, this.to.x, this.to.y, this.style);
+		image.drawLine(this.from.x(), this.from.y(), this.to.x(), this.to.y(), this.style);
 	}
 	
 	Line.prototype.clone = function() {
