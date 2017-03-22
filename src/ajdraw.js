@@ -382,6 +382,7 @@ var ajdraw = function() {
 		line: function (from, to, style) { return new Line(from, to, style); },
 		image: function (ctx) { return new Image(ctx); },
 		composite: function (elements, style) { return new Composite(elements, style); },
+		triangle: function (point1, point2, point3, style) { return new Triangle(point1, point2, point3, style); },
 		
 		Point: Point,
 		Line: Line,
