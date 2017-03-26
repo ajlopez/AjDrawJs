@@ -386,6 +386,7 @@ var ajdraw = function() {
 		rectangle: function (from, to, style) { return new Rectangle(from, to, style); },
 		xfunction: function (fn, from, to, step, style) { return new XFunction(fn, from, to, step, style ); },
 		yfunction: function (fn, from, to, step, style) { return new YFunction(fn, from, to, step, style ); },
+		pfunction: function (fn, from, to, step, style) { return new PointFunction(fn, from, to, step, style ); },
 		
 		Point: Point,
 		Line: Line,
