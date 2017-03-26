@@ -384,8 +384,8 @@ var ajdraw = function() {
 		composite: function (elements, style) { return new Composite(elements, style); },
 		triangle: function (point1, point2, point3, style) { return new Triangle(point1, point2, point3, style); },
 		rectangle: function (from, to, style) { return new Rectangle(from, to, style); },
-		xfunction: function (fn, from, to, style) { return new XFunction(fn, from, to, style ); },
-		yfunction: function (fn, from, to, style) { return new YFunction(fn, from, to, style ); },
+		xfunction: function (fn, from, to, step, style) { return new XFunction(fn, from, to, step, style ); },
+		yfunction: function (fn, from, to, step, style) { return new YFunction(fn, from, to, step, style ); },
 		
 		Point: Point,
 		Line: Line,
