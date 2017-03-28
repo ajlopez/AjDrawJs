@@ -388,6 +388,7 @@ var ajdraw = function() {
 		yfunction: function (fn, from, to, step, style) { return new YFunction(fn, from, to, step, style ); },
 		pfunction: function (fn, from, to, step, style) { return new PointFunction(fn, from, to, step, style ); },
 		repeat: function (fn, element, ntimes, style) { return new Repeat(fn, element, ntimes, style); },
+		sine: function (from, to, step, style) { return new Sine(from, to, step, style ); },
 		
 		Point: Point,
 		Line: Line,
