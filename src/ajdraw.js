@@ -200,8 +200,8 @@ var ajdraw = function() {
 	Triangle.prototype.constructor = Triangle;
 	
 	function Rectangle(point1, point2, style) {
-        var point3 = new Point(point2.x, point1.y);
-        var point4 = new Point(point1.x, point2.y);
+        var point3 = new Point(point2.x(), point1.y());
+        var point4 = new Point(point1.x(), point2.y());
         
 		Composite.prototype.constructor.call(
 			this, 
