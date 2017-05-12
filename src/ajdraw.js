@@ -27,16 +27,16 @@ var ajdraw = function() {
 	
 	Point.prototype.rotate = function(degrees)
 	{
-		if (degrees == 0)
+		if (degrees === 0)
 			return this;
 			
-		if (degrees == 90)
+		if (degrees === 90)
 			return new Point(-this.y(), this.x());
 			
-		if (degrees == 180)
+		if (degrees === 180)
 			return new Point(-this.x(), -this.y());
 			
-		if (degrees == 270)
+		if (degrees === 270)
 			return new Point(this.y(), -this.x());
 
 		var radians = 2 * Math.PI / 360 * degrees;
@@ -110,7 +110,7 @@ var ajdraw = function() {
 		this.elements = elements;
 		this.style = style;
 		
-		if (this.elements == undefined)
+		if (!this.elements)
 			this.elements = [];
 	}
 		
