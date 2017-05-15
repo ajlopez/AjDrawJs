@@ -53,57 +53,57 @@ var ajdraw = function() {
 	}
 	
 	function Line(from, to, style) {
-		this.from = from;
-		this.to = to;
-		this.style = style;
+		this.from = function() { return from };
+		this.to = function() { return to };
+		this.style = function() { return style; };
 	}
 	
 	Line.prototype.translate = function(move) {
 		return new Line(
-			this.from.translate(move),
-			this.to.translate(move),
-			this.style
+			this.from().translate(move),
+			this.to().translate(move),
+			this.style()
 		);
 	}
 	
 	Line.prototype.resize = function(ratio) {
 		return new Line(
-			this.from.resize(ratio),
-			this.to.resize(ratio),
-			this.style
+			this.from().resize(ratio),
+			this.to().resize(ratio),
+			this.style()
 		);
 	}
 	
 	Line.prototype.horizontalResize = function(ratio) {
 		return new Line(
-			this.from.horizontalResize(ratio),			
-			this.to.horizontalResize(ratio),
-			this.style
+			this.from().horizontalResize(ratio),			
+			this.to().horizontalResize(ratio),
+			this.style()
 		);
 	}
 	
 	Line.prototype.verticalResize = function(ratio) {
 		return new Line(
-			this.from.verticalResize(ratio),
-			this.to.verticalResize(ratio),
-			this.style
+			this.from().verticalResize(ratio),
+			this.to().verticalResize(ratio),
+			this.style()
 		);
 	}
 	
 	Line.prototype.rotate = function(degrees) {
 		return new Line(
-			this.from.rotate(degrees),
-			this.to.rotate(degrees),
-			this.style
+			this.from().rotate(degrees),
+			this.to().rotate(degrees),
+			this.style()
 		);
 	}
 	
 	Line.prototype.draw = function(image) {
-		image.drawLine(this.from.x(), this.from.y(), this.to.x(), this.to.y(), this.style);
+		image.drawLine(this.from().x(), this.from().y(), this.to().x(), this.to().y(), this.style());
 	}
 	
 	Line.prototype.clone = function() {
-		return new Line(this.from, this.to, this.style);
+		return new Line(this.from(), this.to(), this.style());
 	}
 	
 	function Composite(elements, style) {
