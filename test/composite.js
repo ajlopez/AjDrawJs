@@ -10,4 +10,9 @@ exports['create composite as object'] = function (test) {
     
     test.ok(composite);
     test.equal(typeof composite, 'object');
+
+    test.ok(composite.elements());
+	test.ok(Array.isArray(composite.elements()));
+	test.equal(composite.elements().length, 1);
+	test.deepEqual(composite.style(), { color: "red" });
 };

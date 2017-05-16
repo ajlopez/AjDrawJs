@@ -107,11 +107,11 @@ var ajdraw = function() {
 	}
 	
 	function Composite(elements, style) {
-		this.elements = elements;
-		this.style = style;
-		
-		if (!this.elements)
-			this.elements = [];
+		if (!elements)
+			elements = [];
+
+		this.elements = function() { return elements; };
+		this.style = function() { return style; };		
 	}
 		
 	Composite.prototype.line = function (from, to) {
@@ -120,70 +120,78 @@ var ajdraw = function() {
 	}
 		
 	Composite.prototype.add = function (element) {
-		this.elements.push(element);
+		this.elements().push(element);
 	}
 		
 	Composite.prototype.draw = function (image) {
-		image.beginDraw(this.style);
+		image.beginDraw(this.style());
 		
-		for (var n in this.elements)
-			this.elements[n].draw(image);
+		var elems = this.elements();
+		
+		for (var n in elems)
+			this.elems[n].draw(image);
 			
-		image.endDraw(this.style);
+		image.endDraw(this.style());
 	}
 		
 	Composite.prototype.rotate = function (degrees) {
 		var newelements = [];
+		var elems = this.elements();
 			
-		for (var n in this.elements)
-			newelements.push(this.elements[n].rotate(degrees));
+		for (var n in elems)
+			newelements.push(elems[n].rotate(degrees));
 				
-		return new Composite(newelements, this.style);
+		return new Composite(newelements, this.style());
 	}
 		
 	Composite.prototype.resize = function (ratio) {
 		var newelements = [];
+		var elems = this.elements();
 			
-		for (var n in this.elements)
-			newelements.push(this.elements[n].resize(ratio));
+		for (var n in elems)
+			newelements.push(elems[n].resize(ratio));
 				
-		return new Composite(newelements, this.style);
+		return new Composite(newelements, this.style());
 	}
 		
 	Composite.prototype.horizontalResize = function (ratio) {
 		var newelements = [];
+		var elems = this.elements();
 			
-		for (var n in this.elements)
-			newelements.push(this.elements[n].horizontalResize(ratio));
+		for (var n in elems)
+			newelements.push(elems[n].horizontalResize(ratio));
 				
-		return new Composite(newelements, this.style);
+		return new Composite(newelements, this.style());
 	}
 		
 	Composite.prototype.verticalResize = function (ratio) {
 		var newelements = [];
+		var elems = this.elements();
 			
-		for (var n in this.elements)
-			newelements.push(this.elements[n].verticalResize(ratio));
+		for (var n in elems)
+			newelements.push(elems[n].verticalResize(ratio));
 				
-		return new Composite(newelements, this.style);
+		return new Composite(newelements, this.style());
 	}
 		
 	Composite.prototype.translate = function (move) {
 		var newelements = [];
+		var elems = this.elements();
 			
-		for (var n in this.elements)
-			newelements.push(this.elements[n].translate(move));
+		for (var n in elems)
+			newelements.push(elems[n].translate(move));
 			
-		return new Composite(newelements, this.style);
+		return new Composite(newelements, this.style());
 	}
 		
 	Composite.prototype.clone = function () {
 		var newelements = [];
+		var elems = this.elements();
 			
-		for (var n in this.elements)
-			newelements.push(this.elements[n].clone());
+		for (var n in elems)
+			newelements.push(elems[n].clone());
 				
-		return new Composite(newelements, this.style);
+		return new Composite(newelements, this.style());
 	}
 	
 	function Triangle(point1, point2, point3, style) {
