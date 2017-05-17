@@ -88,8 +88,8 @@
 		test("Create and Clone Line", function() {
 			var ln = line(p(10,20), p(30,40));
 			
-			deepEqual(ln.from, p(10,20));
-			deepEqual(ln.to, p(30,40));
+			deepEqual(ln.from(), p(10,20));
+			deepEqual(ln.to(), p(30,40));
 			
 			deepEqual(ln.clone(), ln);
 		});
@@ -100,8 +100,8 @@
 			var ln2 = ln.rotate(45);
 			
 			notEqual(ln2, ln);
-			deepEqual(ln2.from, p(10,20).rotate(45));
-			deepEqual(ln2.to, p(30,40).rotate(45));
+			deepEqual(ln2.from(), p(10,20).rotate(45));
+			deepEqual(ln2.to(), p(30,40).rotate(45));
 		});
 		
 		test("Translate Line", function() {
@@ -109,8 +109,8 @@
 			var ln2 = ln.translate(p(-1,-2));
 			
 			notEqual(ln2, ln);
-			deepEqual(ln2.from, p(10,20).translate(p(-1,-2)));
-			deepEqual(ln2.to, p(30,40).translate(p(-1,-2)));
+			deepEqual(ln2.from(), p(10,20).translate(p(-1,-2)));
+			deepEqual(ln2.to(), p(30,40).translate(p(-1,-2)));
 		});
 		
 		test("Draw Line", function() {
@@ -201,7 +201,7 @@
 			strictEqual(comp.line(p(10,10), p(20, 20)), comp);
 			strictEqual(comp.line(p(20,20), p(30, 30)), comp);
 
-			equal(comp.elements.length, 2);
+			equal(comp.elements().length, 2);
 			
 			var comp2 = comp.clone();
 			
@@ -209,7 +209,7 @@
 			notStrictEqual(comp, comp2);
 			deepEqual(comp, comp2);
 			
-			equal(comp.translate(p(100,100)).elements.length, 2);
+			equal(comp.translate(p(100,100)).elements().length, 2);
 		});
 
 		test("Image Draws Triangle with Color", function() {

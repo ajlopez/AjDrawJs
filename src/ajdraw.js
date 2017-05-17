@@ -399,7 +399,6 @@ var ajdraw = function() {
 		sine: function (from, to, step, style) { return new Sine(from, to, step, style ); },
 		cosine: function (from, to, step, style) { return new Cosine(from, to, step, style ); },
 		
-		Point: Point,
 		Line: Line,
 		Image: Image,
 		Composite: Composite,
